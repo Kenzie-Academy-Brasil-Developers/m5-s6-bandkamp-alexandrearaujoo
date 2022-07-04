@@ -1,6 +1,5 @@
 
 from rest_framework import serializers
-import musicians
 from musicians.models import Musician
 
 from .models import Song

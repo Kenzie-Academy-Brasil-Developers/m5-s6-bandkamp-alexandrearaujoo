@@ -1,8 +1,7 @@
 from albums.models import Album
 from albums.serializers import AlbumSerializer
 from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView, Response, status
-import musicians
+
 from songs.models import Song
 from songs.serializers import SongSerializer
 from rest_framework import generics
@@ -10,13 +9,6 @@ from rest_framework import generics
 from .models import Musician
 from .serializers import MusicianSerializer
 
-
-def get_object_by_id(model, id):
-        object = get_object_or_404(model, id=id)
-
-        return object
-
-# Create your views here.
 class ListCreateView(generics.ListCreateAPIView):
     queryset = Musician.objects.all()
     serializer_class = MusicianSerializer
