@@ -10,3 +10,5 @@ RUN pip install -r requirements.txt
 WORKDIR /code
 
 COPY . /code/
+
+CMD ["python", "manage.py", "runserver"]
