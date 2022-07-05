@@ -32,7 +32,7 @@ services:
 
     depends_on:
       - db
-      - migratrion
+      - migration
 
 volumes:
   pgdata:
