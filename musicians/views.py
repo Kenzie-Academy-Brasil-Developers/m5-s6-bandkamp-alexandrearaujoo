@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from songs.models import Song
 from songs.serializers import SongSerializer
 from rest_framework import generics
+from rest_framework.pagination import PageNumberPagination
 
 from .models import Musician
 from .serializers import MusicianSerializer
@@ -12,6 +13,7 @@ from .serializers import MusicianSerializer
 class ListCreateView(generics.ListCreateAPIView):
     queryset = Musician.objects.all()
     serializer_class = MusicianSerializer
+    pagination_class = PageNumberPagination
 
 class RetriveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Musician.objects.all()
@@ -20,6 +22,7 @@ class RetriveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
 
 class ListCreateMusicianAlbumView(generics.ListCreateAPIView):
     serializer_class = AlbumSerializer
+    pagination_class = PageNumberPagination
 
     def perform_create(self, serializer):
         musician = get_object_or_404(Musician, pk=self.kwargs['pk'])
@@ -33,6 +36,7 @@ class ListCreateMusicianAlbumView(generics.ListCreateAPIView):
 
 class ListCreateMusicianAlbumSongView(generics.ListCreateAPIView):
     serializer_class = SongSerializer
+    pagination_class = PageNumberPagination
 
     def perform_create(self, serializer):
         musician = get_object_or_404(Musician, pk=self.kwargs['pk'])
