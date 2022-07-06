@@ -59,7 +59,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["api-bandkamp.herokuapp.com", "localhost"]
+ALLOWED_HOSTS = ["https://api-bandkamp.herokuapp.com/", "localhost"]
 
 
 # Application definition
