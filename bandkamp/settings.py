@@ -23,7 +23,8 @@ if DATABASE_URL:
     db_from_env = dj_database_url.config(
         default=DATABASE_URL, conn_max_age=500, ssl_require=True
     )
-    DATABASE_URL['default'].update(db_from_env)
+    DATABASES = {"default": {**db_from_env}}
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
