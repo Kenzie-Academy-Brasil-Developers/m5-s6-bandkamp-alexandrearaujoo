@@ -11,7 +11,7 @@ from .models import Musician
 from .serializers import MusicianSerializer
 
 class ListCreateView(generics.ListCreateAPIView):
-    queryset = Musician.objects.all()
+    queryset = Musician.objects.all().order_by("id")
     serializer_class = MusicianSerializer
     pagination_class = PageNumberPagination
 
@@ -32,7 +32,7 @@ class ListCreateMusicianAlbumView(generics.ListCreateAPIView):
     def get_queryset(self):
         musician = get_object_or_404(Musician, pk=self.kwargs['pk'])
 
-        return Album.objects.filter(musician=musician)
+        return Album.objects.filter(musician=musician).order_by("id")
 
 class ListCreateMusicianAlbumSongView(generics.ListCreateAPIView):
     serializer_class = SongSerializer
@@ -50,5 +50,5 @@ class ListCreateMusicianAlbumSongView(generics.ListCreateAPIView):
 
         songs = Song.objects.filter(musician=musician, album=album)
 
-        return songs
+        return songs.order_by("id")
         
