@@ -31,6 +31,12 @@ class ListCreateMusicianAlbumView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         musician = get_object_or_404(Musician, pk=self.kwargs['pk'])
+        route_param = self.request.GET.get('duration_gt')
+
+
+        if route_param:
+            queryset = Album.objects.filter(musician=musician, total_duration__gt=int(route_param))
+            return queryset
 
         return Album.objects.filter(musician=musician).order_by("id")
 
@@ -41,7 +47,7 @@ class ListCreateMusicianAlbumSongView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         musician = get_object_or_404(Musician, pk=self.kwargs['pk'])
         album = Album.objects.filter(musician=musician, id=self.kwargs['album_id']).first()
-
+        
         serializer.save(album=album)
 
     def get_queryset(self):

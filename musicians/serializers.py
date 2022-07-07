@@ -11,3 +11,4 @@ class MusicianSerializer(serializers.ModelSerializer):
         model = Musician
         fields = '__all__'
 
+
