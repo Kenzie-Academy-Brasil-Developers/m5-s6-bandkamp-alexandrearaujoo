@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from albums.models import Album
 from albums.serializers import AlbumSerializer
 from django.shortcuts import get_object_or_404
@@ -26,17 +27,30 @@ class ListCreateMusicianAlbumView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         musician = get_object_or_404(Musician, pk=self.kwargs['pk'])
-
+        
         serializer.save(musician=musician)
 
     def get_queryset(self):
-        musician = get_object_or_404(Musician, pk=self.kwargs['pk'])
-        route_param = self.request.GET.get('duration_gt')
+        route_param_gt = self.request.GET.get('duration_gt')
+        route_param_lt = self.request.GET.get('duration_lt')
 
-
-        if route_param:
-            queryset = Album.objects.filter(musician=musician, total_duration__gt=int(route_param))
+        if route_param_gt:
+            queryset = (
+                Album.objects.annotate(total_duration=Sum("songs__duration"))
+                .filter(total_duration__gt=int(route_param_gt))
+                .all()
+            )
             return queryset
+
+        if route_param_lt:
+            queryset = (
+                Album.objects.annotate(total_duration=Sum("songs__duration"))
+                .filter(total_duration__lt=int(route_param_lt))
+                .all()
+            )
+            return queryset
+
+        musician = get_object_or_404(Musician, pk=self.kwargs['pk'])
 
         return Album.objects.filter(musician=musician).order_by("id")
 

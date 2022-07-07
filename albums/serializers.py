@@ -22,9 +22,7 @@ class AlbumSerializer(serializers.ModelSerializer):
         return total_duration
 
     def get_songs_count(self, album):
-        songs = album.songs.all().count()
-
-        return songs
+        return album.songs.all().count()
 
     def create(self, validated_data):
         return Album.objects.create(**validated_data)
